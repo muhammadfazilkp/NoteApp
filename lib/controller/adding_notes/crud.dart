@@ -4,6 +4,8 @@ import 'package:note_app/model/model.dart';
 
 class CrudOpretion extends ChangeNotifier {
   static const String noteApp = 'notes';
+  TextEditingController titleController=TextEditingController();
+  TextEditingController contentController =TextEditingController();
 
   Future<Box<Note>> openBox() async {
     return await Hive.openBox<Note>(noteApp);
