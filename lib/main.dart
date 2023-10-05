@@ -4,6 +4,7 @@ import 'package:note_app/controller/adding_notes/crud.dart';
 import 'package:note_app/controller/regestring_adapter/adapter.dart';
 import 'package:note_app/model/model.dart';
 import 'package:note_app/view/presentation/screens/homescreen/homescreen.dart';
+import 'package:note_app/view/presentation/screens/spalsh/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -12,8 +13,7 @@ void main() async {
   await Hive.initFlutter();
 
   // Register your custom adapter for the Note class
-  if (!Hive.isAdapterRegistered(
-      CustomNoteAdapter().typeId )) {
+  if (!Hive.isAdapterRegistered(CustomNoteAdapter().typeId)) {
     Hive.registerAdapter(CustomNoteAdapter());
   }
 
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
               seedColor: const Color.fromARGB(255, 206, 206, 12)),
           useMaterial3: true,
         ),
-        home: const HomeScreen(),
+        home: const Splashscreen(),
       ),
     );
   }

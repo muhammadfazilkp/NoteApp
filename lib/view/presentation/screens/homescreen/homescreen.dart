@@ -1,3 +1,5 @@
+import 'dart:js_util';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:note_app/controller/adding_notes/crud.dart';
@@ -27,7 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(
           'Notes',
           style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w600, color: Colors.purple),
+            fontWeight: FontWeight.w600,
+            color: Colors.purple,
+          ),
         ),
       ),
       body: Consumer<CrudOpretion>(
@@ -65,16 +69,59 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Card(
                         elevation: 4.0,
                         child: InkWell(
-                          onTap: () {
-                            // Handle tap on the note
+                          onLongPress: () {
+                            // Show a dialog or perform the delete action here
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text(
+                                    'Delete Note',
+                                    style: GoogleFonts.poppins(),
+                                  ),
+                                  content: const Text(
+                                      'Are you sure you want to delete this note?'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pop(); // Close the dialog
+                                      },
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        // Perform the delete action here
+                                        value.deleteNote(index);
+                                        Navigator.of(context)
+                                            .pop(); // Close the dialog
+                                      },
+                                      child: const Text('Delete'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           },
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(
-                                note.title,
-                                style: GoogleFonts.poppins(
-                                    fontSize: 19, fontWeight: FontWeight.w500),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    note.title,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Divider(
+                                thickness: 2,
+                                color: Colors.green,
                               ),
                               const SizedBox(height: 8.0),
                               Text(note.content, style: GoogleFonts.poppins()),
@@ -97,7 +144,6 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AddNoteScreen()));
-          // Handle button press to create a new note
         },
         label: Text(
           'Create Note',

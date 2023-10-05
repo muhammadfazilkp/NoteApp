@@ -25,6 +25,7 @@ class CrudOpretion extends ChangeNotifier {
     final box=await openBox();
     return box.values.toList();
     
+    
 
   }
 
