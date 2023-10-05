@@ -55,6 +55,7 @@ class AddNoteScreen extends StatelessWidget {
                 note.addNote(Note(
                     title: note.titleController.text.trim(),
                     content: note.contentController.text.trim()));
+                    Navigator.pop(context);
                   
               }
               // Add your action when the button is pressed.

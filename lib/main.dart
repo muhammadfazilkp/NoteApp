@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:note_app/controller/adding_notes/crud.dart';
+import 'package:note_app/controller/regestring_adapter/adapter.dart';
 import 'package:note_app/model/model.dart';
 import 'package:note_app/view/presentation/screens/homescreen/homescreen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Hive.initFlutter();
   runApp(const MyApp());
-    if (!Hive.isAdapterRegistered(Note(title: '', content: '')().typeId)) {
-    Hive.registerAdapter(Note());}
   await Hive.initFlutter();
-   await Hive.openBox('notes');
+
+  // Register your custom adapter for the Note class
+  if (!Hive.isAdapterRegistered(
+      CustomNoteAdapter().typeId )) {
+    Hive.registerAdapter(CustomNoteAdapter());
+  }
+
+  await Hive.openBox<Note>('notes');
 }
 
 class MyApp extends StatelessWidget {
@@ -21,9 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => CrudOpretion())
-      ],
+      providers: [ChangeNotifierProvider(create: (context) => CrudOpretion())],
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,

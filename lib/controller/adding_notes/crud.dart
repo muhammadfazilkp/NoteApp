@@ -8,12 +8,13 @@ class CrudOpretion extends ChangeNotifier {
   TextEditingController contentController =TextEditingController();
 
   Future<Box<Note>> openBox() async {
-    return await Hive.openBox<Note>(noteApp);
+    return await Hive.box<Note>(noteApp);
   }
 
   Future<void> addNote(Note note) async {
     final box = await openBox();
     await box.add(note);
+    notifyListeners();
   }
 
   Future<void> deleteNote(int index) async {
@@ -23,6 +24,7 @@ class CrudOpretion extends ChangeNotifier {
   Future<List<Note>>getNotes()async{
     final box=await openBox();
     return box.values.toList();
+    
 
   }
 
