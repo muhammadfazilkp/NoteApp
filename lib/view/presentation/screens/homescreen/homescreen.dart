@@ -1,6 +1,5 @@
-import 'dart:js_util';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:note_app/controller/adding_notes/crud.dart';
 import 'package:note_app/model/model.dart';
@@ -70,7 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         elevation: 4.0,
                         child: InkWell(
                           onLongPress: () {
-                            // Show a dialog or perform the delete action here
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -103,31 +101,34 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                             );
                           },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    note.title,
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.w500,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      note.title,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              const Divider(
-                                thickness: 2,
-                                color: Colors.green,
-                              ),
-                              const SizedBox(height: 8.0),
-                              Text(note.content, style: GoogleFonts.poppins()),
-
-                              // Use note title here
-                            ],
+                                const Divider(),
+                                const SizedBox(height: 8.0),
+                                Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(note.content,
+                                        style: GoogleFonts.poppins())),
+                          
+                                // Use note title here
+                              ],
+                            ),
                           ),
                         ),
                       ),

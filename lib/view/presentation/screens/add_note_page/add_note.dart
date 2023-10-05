@@ -13,16 +13,32 @@ class AddNoteScreen extends StatelessWidget {
     return Form(
       key: formKey,
       child: Scaffold(
-        body: SafeArea(
-          child: Card(
-            child: Consumer<CrudOpretion>(
-              builder: (context, value, child) => Column(
-                children: [
-                  Padding(
+        backgroundColor: Colors.grey[100],
+        body: Consumer<CrudOpretion>(
+          builder: (context, value, child) => ListView(
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Card(
+                  color: Colors.grey[100],
+                  child: Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: TextFormField(
+                      maxLength: 20,
+
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'please enter the title';
+                        } else {
+                          return null;
+                        }
+                      },
                       controller: value.titleController,
                       decoration: InputDecoration(
+                        border: InputBorder.none,
                         hintMaxLines: 1,
                         label: Text(
                           'Title',
@@ -33,18 +49,36 @@ class AddNoteScreen extends StatelessWidget {
                       // maxLength: 25,
                     ),
                   ),
-                  Expanded(
-                    child: TextFormField(
-                      controller: value.contentController,
-                      decoration:
-                          const InputDecoration(border: InputBorder.none),
-                      maxLines: 20,
-                      // maxLength: 150,
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Card(
+                  color: Colors.grey[100],
+                  child: TextFormField(
+                    maxLength: 150,
+                    controller: value.contentController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'please write something';
+                      } else {
+                        return null;
+                      }
+                    },
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        label: Align(
+                            alignment: Alignment.topCenter,
+                            child: Text(
+                              'content',
+                              style: GoogleFonts.poppins(),
+                            ))),
+                    maxLines: 20,
+                    // maxLength: 150,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         floatingActionButton: Consumer<CrudOpretion>(

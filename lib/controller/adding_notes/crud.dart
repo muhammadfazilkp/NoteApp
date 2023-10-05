@@ -20,6 +20,7 @@ class CrudOpretion extends ChangeNotifier {
   Future<void> deleteNote(int index) async {
     final box = await openBox();
     await box.deleteAt(index);
+    notifyListeners();
   }
   Future<List<Note>>getNotes()async{
     final box=await openBox();
