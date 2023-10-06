@@ -7,6 +7,15 @@ class CrudOpretion extends ChangeNotifier {
   TextEditingController titleController=TextEditingController();
   TextEditingController contentController =TextEditingController();
 
+  TextEditingController editTitleController=TextEditingController();
+  TextEditingController editContentController=TextEditingController();
+
+  void edit(String head,String body){
+      editTitleController.text=head;
+      editContentController.text=body;
+      notifyListeners();
+  }
+
   Future<Box<Note>> openBox() async {
     return await Hive.box<Note>(noteApp);
   }
