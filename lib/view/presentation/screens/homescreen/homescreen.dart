@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.pink.shade100,
         leading: const Icon(
           Icons.note_alt_sharp,
           size: 25,
