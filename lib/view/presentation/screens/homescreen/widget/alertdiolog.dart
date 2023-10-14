@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class DialogBox {
   static void show(BuildContext context) {
-     final formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -13,6 +13,7 @@ class DialogBox {
           backgroundColor: Colors.pink[200],
           content: SingleChildScrollView(
             child: SizedBox(
+              height: 10,
               child: Form(
                 key: formKey,
                 child: Column(
@@ -20,14 +21,15 @@ class DialogBox {
                   children: [
                     TextFormField(
                       validator: (value) {
-                        if(value==null||value.isEmpty){
+                        if (value == null || value.isEmpty) {
                           return 'enter the tittl';
-                        }else{
+                        } else {
                           return null;
                         }
                       },
-                      controller: Provider.of<CrudOpretion>(context, listen: false)
-                          .titleController,
+                      controller:
+                          Provider.of<CrudOpretion>(context, listen: false)
+                              .titleController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Add a new task tittl",
@@ -38,14 +40,15 @@ class DialogBox {
                     ),
                     TextFormField(
                       validator: (value) {
-                        if(value==null||value.isEmpty){
+                        if (value == null || value.isEmpty) {
                           return 'please entert the tittle';
-                        }else{
+                        } else {
                           return null;
                         }
                       },
-                      controller: Provider.of<CrudOpretion>(context, listen: false)
-                          .contentController,
+                      controller:
+                          Provider.of<CrudOpretion>(context, listen: false)
+                              .contentController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Add a new task",
@@ -57,13 +60,14 @@ class DialogBox {
                         children: [
                           TextButton(
                               onPressed: () {
-                                if(formKey.currentState!.validate()){
-                                value.addNote(Note(
-                                    title: value.titleController.text.trim(),
-                                    content: value.contentController.text.trim()));
-                                value.titleController.text = '';
-                                value.contentController.text = '';
-                                Navigator.pop(context);
+                                if (formKey.currentState!.validate()) {
+                                  value.addNote(Note(
+                                      title: value.titleController.text.trim(),
+                                      content:
+                                          value.contentController.text.trim()));
+                                  value.titleController.text = '';
+                                  value.contentController.text = '';
+                                  Navigator.pop(context);
                                 }
                               },
                               child: const Text('Save')),
