@@ -15,8 +15,7 @@ class Splashscreen extends StatelessWidget {
         width: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('asset/splash.png'),
-               fit: BoxFit.cover),
+              image: AssetImage('asset/splash.png'), fit: BoxFit.cover),
         ),
       ),
     );
@@ -24,7 +23,9 @@ class Splashscreen extends StatelessWidget {
 
   Future<void> navigator(BuildContext context) async {
     await Future.delayed(const Duration(seconds: 3)).then((value) =>
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const HomeScreen())));
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            (route) => false));
   }
 }

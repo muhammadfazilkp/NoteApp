@@ -5,6 +5,7 @@ import 'package:note_app/controller/adding_notes/crud.dart';
 import 'package:note_app/model/model.dart';
 import 'package:note_app/view/presentation/screens/edit_page/edit_page.dart';
 import 'package:note_app/view/presentation/screens/homescreen/widget/alertdiolog.dart';
+import 'package:note_app/view/presentation/screens/homescreen/widget/listingdatas.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -115,68 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                               );
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Consumer<CrudOpretion>(
-                                    builder: (context, value, child) => Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 10),
-                                              child: Checkbox(
-                                                value: note.taskCompleted,
-                                                onChanged: (newValue) {
-                                                  value.updateTaskCompletion(
-                                                      index, newValue ?? true);
-                                                },
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                note.title,
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 19,
-                                                  fontWeight: FontWeight.w500,
-                                                  decoration: note.taskCompleted
-                                                      ? TextDecoration
-                                                          .lineThrough
-                                                      : TextDecoration.none,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8.0),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      note.content,
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      ' $currentDate',
-                                      style: GoogleFonts.poppins(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            child: DataFeatch(note: note, currentDate: currentDate, index: index,),
                           ),
                         ),
                       );
@@ -205,3 +145,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
