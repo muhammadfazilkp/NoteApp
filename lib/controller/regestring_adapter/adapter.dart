@@ -12,9 +12,8 @@ class CustomNoteAdapter extends TypeAdapter<Note> {
       final content = reader.readString();
       return Note(title: title, content: content);
     } catch (e) {
-      // Handle any exceptions here, e.g., by returning a default value or logging the error.
       print('Error reading note: $e');
-      return Note( title: '',content: ''); // Return a default Note or handle the error as needed.
+      return Note(title: '', content: '');
     }
   }
 
@@ -24,7 +23,6 @@ class CustomNoteAdapter extends TypeAdapter<Note> {
       writer.writeString(obj.title);
       writer.writeString(obj.content);
     } catch (e) {
-      // Handle any exceptions here, e.g., by logging the error.
       print('Error writing note: $e');
     }
   }

@@ -15,8 +15,8 @@ class Splashscreen extends StatelessWidget {
         width: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('asset/cute-animals-frame_1308-33564.jpg'),
-              fit: BoxFit.contain),
+              image: AssetImage('asset/fasil-02.png'),
+               fit: BoxFit.cover),
         ),
       ),
     );

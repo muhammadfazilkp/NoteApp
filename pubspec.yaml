@@ -41,6 +41,7 @@ dependencies:
   curved_navigation_bar: ^1.0.3
   google_fonts: ^6.1.0
   path_provider: ^2.1.1
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
@@ -68,13 +69,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - asset\Screenshot 2023-10-04 122939.png
-   - asset\add-notes-concept-illustration_114360-2496.avif
-   - asset\paper-template-with-girl-wild-animals_1308-3202.avif
-   - asset\border-template-with-cute-animals_1308-33677.avif
-   - asset\border-design-with-wild-animals_1308-29913.avif
+   - asset\fasil-02.png
+   - asset\fasil-01.png
    - asset\cute-animals-frame_1308-33564.jpg
    - asset\fasil.png
+   
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

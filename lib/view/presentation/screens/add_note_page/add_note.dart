@@ -13,10 +13,13 @@ class AddNoteScreen extends StatelessWidget {
     return Form(
       key: formKey,
       child: Scaffold(
-        backgroundColor: Colors.grey[100],
+        // backgroundColor: Colors.grey[100],
         body: Consumer<CrudOpretion>(
           builder: (context, value, child) => Container(
-            decoration: const  BoxDecoration(image: DecorationImage(image: AssetImage('asset/fasil.png'),fit: BoxFit.cover)),
+            height: double.infinity,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('asset/fasil.png'), fit: BoxFit.cover)),
             child: ListView(
               children: [
                 const SizedBox(
@@ -27,10 +30,10 @@ class AddNoteScreen extends StatelessWidget {
                   child: Card(
                     color: Colors.grey[100],
                     child: Padding(
-                      padding: const EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         maxLength: 20,
-          
+
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'please enter the title';
@@ -57,26 +60,29 @@ class AddNoteScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(5.0),
                   child: Card(
                     color: Colors.grey[100],
-                    child: TextFormField(
-                      maxLength: 150,
-                      controller: value.contentController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'please write something';
-                        } else {
-                          return null;
-                        }
-                      },
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          label: Align(
-                              alignment: Alignment.topCenter,
-                              child: Text(
-                                'content',
-                                style: GoogleFonts.poppins(),
-                              ))),
-                      maxLines: 20,
-                      // maxLength: 150,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        maxLength: 150,
+                        controller: value.contentController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'please write something';
+                          } else {
+                            return null;
+                          }
+                        },
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            label: Align(
+                                alignment: Alignment.topCenter,
+                                child: Text(
+                                  'content',
+                                  style: GoogleFonts.poppins(),
+                                ))),
+                        maxLines: 20,
+                        // maxLength: 150,
+                      ),
                     ),
                   ),
                 ),
@@ -96,7 +102,6 @@ class AddNoteScreen extends StatelessWidget {
                 note.contentController.text = '';
                 Navigator.pop(context);
               }
-              // Add your action when the button is pressed.
             },
             label: Text(
               'Save Note',

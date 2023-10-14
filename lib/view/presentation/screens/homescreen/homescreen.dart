@@ -1,53 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:note_app/controller/adding_notes/crud.dart';
 import 'package:note_app/model/model.dart';
-import 'package:note_app/view/presentation/screens/add_note_page/add_note.dart';
 import 'package:note_app/view/presentation/screens/edit_page/edit_page.dart';
+import 'package:note_app/view/presentation/screens/homescreen/widget/alertdiolog.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, Key? y});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
-// List<Color> cardColors = [
-//   const Color.fromARGB(255, 163, 66, 59),
-//   Colors.blue,
-//   Colors.green,
-//   Colors.yellow,
-//   Colors.orange,
-//   Colors.purple
-// ];
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.pink.shade100,
-        leading: const Icon(
-          Icons.note_alt_sharp,
-          size: 25,
-        ),
-        title: Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            'Notes',
-            style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w600,
-              color: Colors.purple,
-            ),
+        title: Text(
+          'TO DO',
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w600,
+            color: Colors.purple,
           ),
         ),
       ),
       body: Consumer<CrudOpretion>(
         builder: (context, value, child) => Container(
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('asset/fasil.png'), fit: BoxFit.cover)),
+          decoration: const BoxDecoration(),
           child: FutureBuilder<List<Note>>(
             future: value.getNotes(),
             builder: (context, snapshot) {
@@ -59,37 +43,46 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Center(
                   child: Text('Error: ${snapshot.error}'),
                 );
-              } else if (!snapshot.hasData) {
-                return const Center(
-                  child: Text('No notes available'),
-                );
               } else {
-                final notes = snapshot.data;
+                final notes = snapshot.data ?? [];
+                final currentDate =
+                    DateFormat('yyyy/MM/dd ').format(DateTime.now());
 
-                return Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 5.0,
-                      crossAxisSpacing: 8.0,
+                if (notes.isEmpty) {
+                  return Center(
+                    child: Text(
+                      'No notes available',
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
                     ),
+                  );
+                } else {
+                  return ListView.builder(
                     itemCount: snapshot.data?.length,
                     itemBuilder: (context, index) {
                       final note = snapshot.data![index];
-                      // final cardColor = cardColors[index % cardColors.length];
-                      // final idx = index % 4;
-
                       return Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Card(
-                          elevation: 4.0,
-                          color: Colors.pink[100],
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          constraints: const BoxConstraints(maxWidth: 200),
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey[200],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           child: InkWell(
                             onTap: () {
-                              Provider.of<CrudOpretion>(context,listen: false).edit(note.title, note.content);
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> const EditScreen()));
+                              Provider.of<CrudOpretion>(context, listen: false)
+                                  .edit(note.title, note.content);
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const EditScreen(),
+                                ),
+                              );
                             },
                             onLongPress: () {
                               showDialog(
@@ -121,54 +114,83 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                               );
                             },
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          note.title,
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 19,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Consumer<CrudOpretion>(
+                                    builder: (context, value, child) => Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 10),
+                                              child: Checkbox(
+                                                value: note.taskCompleted,
+                                                onChanged: (newValue) {
+                                                  value.updateTaskCompletion(
+                                                      index, newValue ?? true);
+                                                },
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                note.title,
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 19,
+                                                  fontWeight: FontWeight.w500,
+                                                  decoration: note.taskCompleted
+                                                      ? TextDecoration
+                                                          .lineThrough
+                                                      : TextDecoration.none,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8.0),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      note.content,
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.black,
                                       ),
                                     ),
-                                    const Divider( color: Colors.black12,),
-                                    const SizedBox(height: 8.0),
-                                    Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(note.content,
-                                            style: GoogleFonts.poppins( ))),
-
-                                    // Use note title here
-                                  ],
-                                ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      ' $currentDate',
+                                      style: GoogleFonts.poppins(),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
                       );
                     },
-                  ),
-                );
+                  );
+                }
               }
             },
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: const Color.fromARGB(255, 112, 36, 204),
+        backgroundColor: Colors.pink[200],
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddNoteScreen()));
+          DialogBox.show(context);
         },
         label: Text(
           'Create Note',

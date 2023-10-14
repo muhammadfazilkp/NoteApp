@@ -8,5 +8,13 @@ class Note extends HiveObject {
 
   @HiveField(1)
   late String content;
-  Note({required this.title, required this.content});
+
+  @HiveField(2)
+  late bool taskCompleted;
+
+  @HiveField(3)
+  int? key;
+
+  Note(
+      {required this.title, required this.content, this.taskCompleted = false,this.key});
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/controller/adding_notes/crud.dart';
+import 'package:note_app/model/model.dart';
 import 'package:provider/provider.dart';
 
 class EditScreen extends StatelessWidget {
@@ -7,62 +8,51 @@ class EditScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.pink[100],
-      body: SafeArea(
-        child: Consumer<CrudOpretion>(
-          builder: (context, value, child) => WillPopScope(
-            onWillPop: () async {
-              // Access the CrudOpretion provider
-              final crudProvider =
-                  Provider.of<CrudOpretion>(context, listen: false);
-
-              crudProvider.edit(
-                crudProvider.editTitleController.text,
-                crudProvider.editContentController.text,
-              );
-
-              return true;
-            },
+    return Consumer<CrudOpretion>(
+      builder: (context, value, child) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.pink[100],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 150),
-                      child: TextField(
-                        decoration:
-                            const InputDecoration(border: InputBorder.none),
-                        maxLines: null,
-                        controller: value.editTitleController,
-                      ),
+              child: Column(
+                children: [
+                  TextField(
+                    decoration: const InputDecoration(
+                      hintText: 'subject',
+                      label: Icon(Icons.notes),
                     ),
-                    const Divider(
-                      color: Colors.black12,
+                    maxLines: null,
+                    controller: value.editTitleController,
+                  ),
+                  TextField(
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'content',
+                      label: Icon(Icons.content_paste),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        decoration:
-                            const InputDecoration(border: InputBorder.none),
-                        maxLines: null,
-                        controller: value.editContentController,
-                      ),
-                    )
-                  ],
-                ),
+                    maxLines: null,
+                    controller: value.editContentController,
+                  ),
+                 
+                ],
               ),
             ),
           ),
-        ),
-      ),
+          floatingActionButton: Consumer<CrudOpretion>(
+            builder: (context, value, child) => FloatingActionButton(
+              onPressed: () {
+                value.updateNote(Note(
+                    title: value.editTitleController.text,
+                    content: value.editContentController.text));
+                    Navigator.pop(context);
+              },
+              child:
+                  const Icon(Icons.save), // You can change the icon as needed
+            ),
+          ),
+        );
+      },
     );
   }
 }
