@@ -4,7 +4,8 @@ import 'package:note_app/model/model.dart';
 import 'package:provider/provider.dart';
 
 class EditScreen extends StatelessWidget {
-  const EditScreen({Key? key});
+  const EditScreen({super.key, required this.keyValue});
+  final int keyValue;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,6 @@ class EditScreen extends StatelessWidget {
                     maxLines: null,
                     controller: value.editContentController,
                   ),
-                 
                 ],
               ),
             ),
@@ -43,9 +43,10 @@ class EditScreen extends StatelessWidget {
             builder: (context, value, child) => FloatingActionButton(
               onPressed: () {
                 value.updateNote(Note(
+                    key: keyValue,
                     title: value.editTitleController.text,
                     content: value.editContentController.text));
-                    Navigator.pop(context);
+                Navigator.pop(context);
               },
               child:
                   const Icon(Icons.save), // You can change the icon as needed

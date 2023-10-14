@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
           'TO DO',
           style: GoogleFonts.poppins(
             fontWeight: FontWeight.w600,
-            color: Colors.purple,
+            color: Colors.black,
           ),
         ),
       ),
@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text(
                       'No notes available',
                       style: GoogleFonts.poppins(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 20,
                       ),
                     ),
@@ -80,7 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const EditScreen(),
+                                  builder: (context) =>
+                                      EditScreen(keyValue: note.key!),
                                 ),
                               );
                             },

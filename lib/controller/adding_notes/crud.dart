@@ -15,32 +15,26 @@ class CrudOpretion extends ChangeNotifier {
     editContentController.text = body;
     notifyListeners();
   }
-  
-
-
-
-
 
   Future<Box<Note>> openBox() async {
     return await Hive.box<Note>(noteApp);
   }
 
- Future<void> updateNote(Note updatedNote) async {
-  final box = await openBox();
-  await box.putAt(updatedNote.key!,updatedNote);
-  notifyListeners(); 
-}
+  Future<void> updateNote(Note updatedNote) async {
+    final box = await openBox();
+    await box.put(updatedNote.key!, updatedNote);
+    notifyListeners();
+  }
 
   Future<void> addNote(Note note) async {
     final box = await openBox();
     int key = await box.add(note);
-    note.key=key;
-   box.put(key,note);
-
+    note.key = key;
+    box.put(key, note);
     notifyListeners();
   }
 
-  Future<void> deleteNote(int index) async {
+   Future<void> deleteNote(int index) async {
     final box = await openBox();
     await box.deleteAt(index);
     notifyListeners();
@@ -51,15 +45,17 @@ class CrudOpretion extends ChangeNotifier {
     return box.values.toList();
   }
 
- void updateTaskCompletion(int index, bool taskCompleted) async {
-  final box = await openBox();
-  Note? note = box.getAt(index);
+  void updateTaskCompletion(int index, bool taskCompleted) async {
+    final box = await openBox();
+    Note? note = box.getAt(index);
 
-  if (note != null) {
-    note.taskCompleted = taskCompleted;
-    await box.putAt(index, note);
-    notifyListeners();
+    if (note != null) {
+      note.taskCompleted = taskCompleted;
+      await box.putAt(index, note);
+      notifyListeners();
+    }
   }
 }
 
-}
+
+

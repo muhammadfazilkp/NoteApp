@@ -7,8 +7,6 @@ import 'package:note_app/view/presentation/screens/spalsh/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
   await Hive.initFlutter();
 
   // Register your custom adapter for the Note class
@@ -17,6 +15,8 @@ void main() async {
   }
 
   await Hive.openBox<Note>('notes');
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
