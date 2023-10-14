@@ -3,7 +3,6 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:note_app/controller/adding_notes/crud.dart';
 import 'package:note_app/controller/regestring_adapter/adapter.dart';
 import 'package:note_app/model/model.dart';
-import 'package:note_app/view/presentation/screens/homescreen/homescreen.dart';
 import 'package:note_app/view/presentation/screens/spalsh/splash_screen.dart';
 import 'package:provider/provider.dart';
 
